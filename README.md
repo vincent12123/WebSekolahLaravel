@@ -1,61 +1,262 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Website Sekolah Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Website sekolah yang dibangun dengan Laravel 12, Filament Admin Panel v3, dan Tailwind CSS. Aplikasi ini menyediakan fitur lengkap untuk mengelola konten sekolah termasuk pengumuman, artikel, galeri, ekstrakurikuler, lowongan pekerjaan, dan banyak lagi.
 
-## About Laravel
+## 🚀 Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Frontend (User)
+- **Homepage** - Halaman utama dengan tampilan berita terkini
+- **Announcements** - Pengumuman sekolah dengan fitur penting/urgent
+- **Articles** - Sistem blog dengan kategori dan komentar
+- **Gallery** - Album foto kegiatan sekolah dengan lightbox
+- **Downloads** - Manajemen file download berdasarkan kategori
+- **Extracurriculars** - Informasi kegiatan ekstrakurikuler
+- **Job Listings** - Lowongan pekerjaan dengan sistem aplikasi online
+- **Staff Directory** - Profil guru dan staff sekolah
+- **Complaint Form** - Form pengaduan untuk siswa/orangtua
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Backend (Admin Panel - Filament v3)
+- **Dashboard** - Overview statistik website
+- **Content Management**
+  - Announcements Management
+  - Articles & Categories Management
+  - Comments Moderation
+- **Media Management**
+  - Gallery Albums & Photos
+  - File Downloads by Category
+- **School Management**
+  - Extracurriculars
+  - Staff Profiles
+  - Job Listings & Applications
+  - Complaints/Feedback
+- **Blog System** (Filament Blog Plugin)
+  - Posts Management
+  - Categories & Tags
+- **User Management**
+  - Admin users with roles
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🛠️ Tech Stack
 
-## Learning Laravel
+- **Framework**: Laravel 12.36.1
+- **PHP**: 8.4.14
+- **Admin Panel**: Filament v3
+- **Database**: MySQL 8.x
+- **Frontend**: 
+  - Blade Templates
+  - Tailwind CSS v4
+  - Vanilla JavaScript
+- **Additional Packages**:
+  - Filament Blog Plugin
+  - Laravel Debugbar (development)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📋 Requirements
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- MySQL/MariaDB
+- Apache/Nginx
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ⚙️ Installation
 
-## Laravel Sponsors
+### 1. Clone Repository
+```bash
+git clone https://github.com/vincent12123/WebSekolahLaravel.git
+cd WebSekolahLaravel
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2. Install Dependencies
+```bash
+composer install
+npm install
+```
 
-### Premium Partners
+### 3. Environment Setup
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 4. Database Configuration
+Edit `.env` file:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=blogweb
+DB_USERNAME=root
+DB_PASSWORD=your_password
 
-## Contributing
+# Timezone
+APP_TIMEZONE=Asia/Jakarta
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 5. Run Migrations & Seeders
+```bash
+php artisan migrate:fresh --seed
+```
 
-## Code of Conduct
+Seeder akan membuat:
+- 1 Admin user (email: `admin@example.com`, password: `password`)
+- 5 Categories
+- 6 Sample Articles
+- 5 Announcements
+- 5 Gallery Albums
+- 4 Download Categories dengan files
+- 6 Extracurriculars
+- 4 Job Listings
+- 8 Staff Members
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 6. Storage Link
+```bash
+php artisan storage:link
+```
 
-## Security Vulnerabilities
+### 7. Build Assets
+```bash
+npm run build
+# atau untuk development
+npm run dev
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 8. Run Development Server
+```bash
+php artisan serve
+```
 
-## License
+Akses aplikasi di `http://localhost:8000`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 👤 Default Login
+
+**Admin Panel** (`/admin`)
+- Email: `admin@example.com`
+- Password: `password`
+
+## 📁 Project Structure
+
+```
+app/
+├── Filament/          # Filament admin resources
+│   └── Resources/     # CRUD resources untuk setiap model
+├── Http/
+│   └── Controllers/   # Frontend controllers
+├── Models/            # Eloquent models
+└── Observers/         # Model observers (auto slug)
+
+database/
+├── migrations/        # Database migrations
+└── seeders/          # Sample data seeders
+
+resources/
+├── views/
+│   ├── layouts/      # Master layouts
+│   ├── components/   # Blade components
+│   └── [modules]/    # Module views
+└── css/              # Tailwind CSS
+
+routes/
+└── web.php           # Frontend routes
+```
+
+## 🎨 Modules
+
+### 1. Announcements
+- CRUD pengumuman
+- Filter berdasarkan prioritas (penting/biasa)
+- Attachment files (PDF/DOC/Images)
+- Published date management
+
+### 2. Articles
+- Multi-category blog system
+- Rich text editor
+- Featured images
+- Comment system
+- View counter
+- Author attribution
+
+### 3. Gallery
+- Album-based photo management
+- Cover images
+- Event date tracking
+- Vanilla JS lightbox dengan keyboard navigation
+
+### 4. Downloads
+- Category-based file organization
+- File type detection
+- File size tracking
+- Download counter
+
+### 5. Extracurriculars
+- Activity information
+- Instructor details
+- Schedule management
+- Gallery album integration
+
+### 6. Job Listings
+- Position management
+- Job type (Full-time/Part-time/Contract)
+- Application deadline
+- Online application form
+- Application tracking
+
+### 7. Staff Directory
+- Staff profiles
+- Position hierarchy
+- Contact information
+- Display order management
+
+### 8. Complaints/Feedback
+- Anonymous submission support
+- Category selection
+- Status tracking (pending/reviewed/resolved)
+- Admin response system
+
+## 🔧 Development
+
+### Clear Cache
+```bash
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
+```
+
+### Run Tests
+```bash
+php artisan test
+```
+
+### Code Style
+```bash
+./vendor/bin/pint
+```
+
+## 📝 Additional Features
+
+- **Auto Slug Generation** - Otomatis membuat slug dari title menggunakan Observer
+- **Timezone Support** - Sudah dikonfigurasi untuk Asia/Jakarta (WIB)
+- **Responsive Design** - Mobile-friendly dengan Tailwind CSS
+- **SEO Friendly** - Meta tags dan clean URLs
+- **Form Validation** - Client & server-side validation
+- **Image Upload** - Dengan preview dan validation
+- **Search & Filter** - Pada list pages
+- **Pagination** - Untuk semua listing pages
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+## 📄 License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## 👨‍💻 Author
+
+**Vincent**
+- GitHub: [@vincent12123](https://github.com/vincent12123)
+
+## 🙏 Acknowledgments
+
+- [Laravel](https://laravel.com)
+- [Filament](https://filamentphp.com)
+- [Tailwind CSS](https://tailwindcss.com)
