@@ -2,7 +2,7 @@
 
 Website sekolah yang dibangun dengan Laravel 12, Filament Admin Panel v3, dan Tailwind CSS. Aplikasi ini menyediakan fitur lengkap untuk mengelola konten sekolah termasuk pengumuman, artikel, galeri, ekstrakurikuler, lowongan pekerjaan, dan banyak lagi.
 
-## 🚀 Fitur Utama
+## 🚀 Fitur Utamam
 
 ### Frontend (User)
 - **Homepage** - Halaman utama dengan tampilan berita terkini
