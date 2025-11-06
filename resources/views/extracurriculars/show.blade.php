@@ -14,9 +14,10 @@
     </div>
 
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-8">
-        @if($extracurricular->logo_path)
+        @php($logoUrl = $extracurricular->logo_public_url)
+        @if($logoUrl)
             <div class="h-64 bg-gray-100 flex items-center justify-center p-12">
-                <img src="{{ Storage::url($extracurricular->logo_path) }}" alt="{{ $extracurricular->name }}" class="max-h-full max-w-full object-contain">
+                <img src="{{ $logoUrl }}" alt="{{ $extracurricular->name }}" class="max-h-full max-w-full object-contain">
             </div>
         @else
             <div class="h-64 bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center">

@@ -13,9 +13,10 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($extracurriculars as $extracurricular)
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition group">
-                    @if($extracurricular->logo_path)
+                    @php($logoUrl = $extracurricular->logo_public_url)
+                    @if($logoUrl)
                         <div class="aspect-video bg-gray-100 flex items-center justify-center p-8">
-                            <img src="{{ Storage::url($extracurricular->logo_path) }}" alt="{{ $extracurricular->name }}" class="max-h-full max-w-full object-contain">
+                            <img src="{{ $logoUrl }}" alt="{{ $extracurricular->name }}" class="max-h-full max-w-full object-contain">
                         </div>
                     @else
                         <div class="aspect-video bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
