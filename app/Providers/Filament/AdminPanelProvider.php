@@ -67,8 +67,8 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugins([
-                // Blog plugin
-                BlogPlugin::make(),
+                // Removed Blog plugin (Posts/Authors/Categories) from sidebar
+                // Re-enable by adding: BlogPlugin::make(),
             ]);
     }
 }
