@@ -29,7 +29,7 @@
             <h1 class="text-4xl font-bold text-gray-900 mb-6">{{ $extracurricular->name }}</h1>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                @if($extracurricular->coach)
+                @if($extracurricular->instructor_name)
                     <div class="flex items-start gap-3">
                         <div class="p-2 bg-indigo-50 rounded-lg">
                             <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -38,7 +38,7 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-500 mb-1">Pelatih</p>
-                            <p class="font-semibold text-gray-900">{{ $extracurricular->coach }}</p>
+                            <p class="font-semibold text-gray-900">{{ $extracurricular->instructor_name }}</p>
                         </div>
                     </div>
                 @endif
