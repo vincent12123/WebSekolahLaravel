@@ -9,7 +9,6 @@ use Filament\Actions;
 use Filament\Forms;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Notifications\Notification;
-use Illuminate\Support\HtmlString;
 
 class CreateArticle extends CreateRecord
 {
@@ -19,7 +18,6 @@ class CreateArticle extends CreateRecord
     {
         return [
             Actions\Action::make('generateWithAi')
-                // ... (action AI Anda tetap sama)
                 ->label('Generate with AI')
                 ->icon('heroicon-o-sparkles')
                 ->form([
@@ -34,6 +32,7 @@ class CreateArticle extends CreateRecord
                         $service = app(AiArticleService::class);
                         $result = $service->improveDraft($data['draft']);
 
+                        // Isi field form: content & excerpt
                         $this->form->fill([
                             'content' => $result['content'] ?? null,
                             'excerpt' => $result['excerpt'] ?? null,
@@ -52,7 +51,6 @@ class CreateArticle extends CreateRecord
                     }
                 }),
 
-            // --- BAGIAN YANG DIREVISI ---
             Actions\Action::make('chooseImageUnsplash')
                 ->label('Pilih Gambar (Unsplash)')
                 ->icon('heroicon-o-photo')
@@ -60,13 +58,9 @@ class CreateArticle extends CreateRecord
                     Forms\Components\TextInput::make('query')
                         ->label('Kata kunci')
                         ->default(fn () => $this->form->getState()['title'] ?? '')
-                        ->required()
-                        ->live(debounce: '500ms'),
-
-                    Forms\Components\Radio::make('unsplash_image')
-                        ->hiddenLabel()
-                        // <-- PERBAIKAN: Menggunakan ->columns() untuk opsi radio, bukan ->grid()
-                        ->columns(['default' => 2, 'md' => 4])
+                        ->required(),
+                    Forms\Components\Select::make('unsplash_image')
+                        ->label('Pilih gambar')
                         ->options(function ($get) {
                             $query = trim((string) $get('query'));
                             if ($query === '') {
@@ -78,37 +72,16 @@ class CreateArticle extends CreateRecord
                             } catch (\Throwable $e) {
                                 return [];
                             }
-
                             $opts = [];
                             foreach ($results as $r) {
-                                $thumbnail = $r['thumbnail'] ?? $r['url'];
-                                $label = e($r['alt'] ?? 'Gambar Unsplash');
-                                $author = e($r['author'] ?? 'Unsplash');
-                                $url = $r['url']; // Nilai dari radio button
-
-                                $html = new HtmlString(
-                                    sprintf(
-                                        '<div style="text-align: left;">
-                                            <img src="%s"
-                                                 alt="%s"
-                                                 style="width: 100%%; height: 120px; object-fit: cover; border-radius: 6px; margin-bottom: 6px; border: 1px solid #ddd;"
-                                            >
-                                            <span style="display: block; font-size: 0.8rem; color: #555; line-height: 1.2;">
-                                                by <strong>%s</strong>
-                                            </span>
-                                        </div>',
-                                        $thumbnail,
-                                        $label,
-                                        $author
-                                    )
-                                );
-
-                                $opts[$url] = $html;
+                                $label = ($r['alt'] ?? 'Gambar') . ' — ' . ($r['author'] ?? 'Unsplash');
+                                $opts[$r['url']] = $label;
                             }
                             return $opts;
                         })
+                        ->searchable()
                         ->required()
-                        ->helperText('Pilih salah satu gambar di atas.'),
+                        ->helperText('Pratinjau akan terlihat setelah disimpan ke field URL.'),
                 ])
                 ->action(function (array $data) {
                     $url = $data['unsplash_image'] ?? null;
@@ -127,10 +100,11 @@ class CreateArticle extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // ... (Fungsi ini tetap sama)
+        // Jika ada URL eksternal, gunakan sebagai image_url (menimpa jika tidak ada upload)
         if (!empty($data['image_url_external'])) {
             $data['image_url'] = $data['image_url_external'];
         }
+        // Bersihkan field helper agar tidak disimpan ke DB
         unset($data['image_url_external']);
         return $data;
     }

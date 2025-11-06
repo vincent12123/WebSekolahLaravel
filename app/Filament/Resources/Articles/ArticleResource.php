@@ -25,7 +25,7 @@ use UnitEnum;
 class ArticleResource extends Resource
 {
     protected static ?string $model = Article::class;
-    
+
     // Navigasi Filament (Bahasa Indonesia + ikon yang lebih relevan)
     protected static ?string $navigationLabel = 'Artikel';
     protected static UnitEnum|string|null $navigationGroup = 'Konten';
@@ -40,7 +40,11 @@ class ArticleResource extends Resource
                 TextInput::make('title')->label('Judul')->required(),
                 TextInput::make('slug')->helperText('Otomatis dari judul; bisa disesuaikan'),
                 TextInput::make('excerpt')->label('Ringkasan')->maxLength(500),
-                FileUpload::make('image_url')->label('Gambar')->image()->disk('public')->directory('articles')->preserveFilenames(),
+                FileUpload::make('image_url')->label('Gambar (Upload)')->image()->disk('public')->directory('articles')->preserveFilenames(),
+                TextInput::make('image_url_external')
+                    ->label('URL Gambar (Unsplash/External)')
+                    ->url()
+                    ->helperText('Atau pilih dari Unsplash lewat tombol di atas.'),
                 RichEditor::make('content')->label('Konten')->required()->columnSpanFull(),
                 Select::make('status')->label('Status')->options([
                     'published' => 'Dipublikasikan',
