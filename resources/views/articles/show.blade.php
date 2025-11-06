@@ -51,7 +51,7 @@
                 <div class="mt-8 pt-6 border-t border-gray-200">
                     <div class="flex flex-wrap gap-2">
                         @foreach($article->tags as $tag)
-                            <span class="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full">{{ $tag->name }}</span>
+                            <span class="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full">{{ $tag->name_label }}</span>
                         @endforeach
                     </div>
                 </div>

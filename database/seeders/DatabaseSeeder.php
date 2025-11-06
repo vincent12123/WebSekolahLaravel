@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
 
         // Run all seeders in order
         $this->call([
+            TagSeeder::class,
             CategorySeeder::class,
             AnnouncementSeeder::class,
             ArticleSeeder::class,
