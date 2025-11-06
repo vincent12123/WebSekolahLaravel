@@ -35,4 +35,17 @@ return [
         ],
     ],
 
+    // Gemini / Google Generative Language API
+    'gemini' => [
+        'api_key' => env('GEMINI_API_KEY'),
+        'model' => env('GEMINI_MODEL', 'gemini-1.5-flash'),
+        'endpoint' => env('GEMINI_API_ENDPOINT', 'https://generativelanguage.googleapis.com/v1beta/models'),
+    ],
+
+    // Unsplash API
+    'unsplash' => [
+        'access_key' => env('UNSPLASH_ACCESS_KEY'),
+        'endpoint' => env('UNSPLASH_API_ENDPOINT', 'https://api.unsplash.com'),
+    ],
+
 ];

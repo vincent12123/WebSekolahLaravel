@@ -4,8 +4,17 @@ namespace App\Filament\Resources\Articles\Pages;
 
 use App\Filament\Resources\Articles\ArticleResource;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Actions;
 
 class ListArticles extends ListRecords
 {
     protected static string $resource = ArticleResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\CreateAction::make()
+                ->label('Tambah Artikel'),
+        ];
+    }
 }
