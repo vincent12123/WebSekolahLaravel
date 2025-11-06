@@ -26,6 +26,7 @@ class ArticleSeeder extends Seeder
                 'excerpt' => 'ElIsabeth Uci dari SMPN 2 Sintang berpartisipasi dalam OSN Tingkat Nasional 2024 bidang sains.',
                 'category_id' => $categories->where('slug', 'prestasi')->first()->id,
                 'user_id' => $admin->id,
+                'image_url' => 'https://placehold.co/1200x600?text=OSN+2024',
                 'status' => 'published',
                 'published_at' => now()->subDays(7),
             ],
@@ -36,6 +37,7 @@ class ArticleSeeder extends Seeder
                 'excerpt' => 'Atas partisipasi aktif dalam Gema War On Drugs, SMPN 2 Sintang mendapat penghargaan nasional dari BNN RI.',
                 'category_id' => $categories->where('slug', 'prestasi')->first()->id,
                 'user_id' => $admin->id,
+                'image_url' => 'https://placehold.co/1200x600?text=BNN+RI',
                 'status' => 'published',
                 'published_at' => now()->subDays(5),
             ],
@@ -46,6 +48,7 @@ class ArticleSeeder extends Seeder
                 'excerpt' => 'SMPN 2 Sintang menggelar Gelar Karya P5 dengan tema kewirausahaan, menampilkan "MARKET SPANDA" dengan mata uang khusus.',
                 'category_id' => $categories->where('slug', 'kegiatan')->first()->id,
                 'user_id' => $admin->id,
+                'image_url' => 'https://placehold.co/1200x600?text=Gelar+Karya+P5',
                 'status' => 'published',
                 'published_at' => now()->subDays(3),
             ],
@@ -56,6 +59,7 @@ class ArticleSeeder extends Seeder
                 'excerpt' => 'Siswa SMPN 2 Sintang menanam pohon dan meluncurkan program "Lost Toxic, Less Plastic" untuk memperingati Hari Bumi.',
                 'category_id' => $categories->where('slug', 'kegiatan')->first()->id,
                 'user_id' => $admin->id,
+                'image_url' => 'https://placehold.co/1200x600?text=Hari+Bumi',
                 'status' => 'published',
                 'published_at' => now()->subDays(2),
             ],
@@ -66,13 +70,17 @@ class ArticleSeeder extends Seeder
                 'excerpt' => 'Ignasius Asong ditunjuk sebagai Plt Kepala SMPN 2 Sintang, diharapkan membawa kemajuan bagi sekolah terbesar di Sintang tersebut.',
                 'category_id' => $categories->where('slug', 'berita-sekolah')->first()->id,
                 'user_id' => $admin->id,
+                'image_url' => 'https://placehold.co/1200x600?text=Kepala+Sekolah',
                 'status' => 'published',
                 'published_at' => now()->subDays(10),
             ],
         ];
 
         foreach ($articles as $article) {
-            Article::create($article);
+            Article::updateOrCreate(
+                ['slug' => $article['slug']],
+                $article
+            );
         }
     }
 }
