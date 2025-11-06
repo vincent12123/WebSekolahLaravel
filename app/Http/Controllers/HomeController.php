@@ -43,6 +43,9 @@ class HomeController extends Controller
     // Optional configurable hero image via config('app.hero_image_url') or env('HERO_IMAGE_URL')
     $heroImageUrl = config('app.hero_image_url', env('HERO_IMAGE_URL'));
 
-            return view('home', compact('latestAnnouncements', 'latestArticles', 'featuredAlbums', 'upcomingEvents', 'heroImageUrl'));
+    // Read school name from settings once (avoid querying in Blade)
+    $schoolName = optional(\App\Models\Setting::first())->nama_sekolah ?? config('app.name');
+
+            return view('home', compact('latestAnnouncements', 'latestArticles', 'featuredAlbums', 'upcomingEvents', 'heroImageUrl', 'schoolName'));
     }
 }

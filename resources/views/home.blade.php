@@ -5,25 +5,34 @@
 @section('content')
 <!-- Hero Section -->
 <div class="relative">
-    <div class="relative h-[420px] sm:h-[520px]">
+    <div class="relative h-[560px] sm:h-[640px] lg:h-[720px]">
         @if(!empty($heroImageUrl))
             <img src="{{ $heroImageUrl }}" alt="Hero" class="absolute inset-0 w-full h-full object-cover" />
-            <div class="absolute inset-0 bg-black/40"></div>
+            <!-- Dark overlay to improve text contrast -->
+            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/30"></div>
         @else
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600"></div>
-            <div class="absolute inset-0 bg-black/30"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-700 to-indigo-700"></div>
+            <div class="absolute inset-0 bg-black/40"></div>
         @endif
 
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col items-center justify-center text-center">
-            <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">Selamat datang di {{ config('app.name') }}</h1>
-            <p class="mt-4 max-w-3xl mx-auto text-lg sm:text-xl text-white/90">Tetap terbarui dengan pengumuman, artikel, dan kegiatan terbaru kami</p>
-            <div class="mt-8 flex flex-wrap justify-center gap-4">
-                <a href="{{ route('announcements.index') }}" class="inline-block rounded-lg bg-white px-8 py-3 text-base font-semibold text-indigo-600 shadow-md hover:bg-indigo-50 transition" aria-label="Lihat pengumuman">
-                    Lihat Pengumuman
-                </a>
-                <a href="{{ route('articles.index') }}" class="inline-block rounded-lg border-2 border-white px-8 py-3 text-base font-semibold text-white shadow-md hover:bg-white/10 transition" aria-label="Baca artikel">
-                    Baca Artikel
-                </a>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+            <div class="max-w-3xl text-left text-white">
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight drop-shadow-md">
+                    Selamat Datang di
+                    <span class="block">{{ $schoolName }}</span>
+                </h1>
+                <p class="mt-5 text-lg sm:text-xl text-white/90">
+                    Memberdayakan siswa untuk mencapai keunggulan melalui pendidikan berkualitas dan pengembangan holistik
+                </p>
+                <div class="mt-8 flex flex-wrap items-center gap-4">
+                    <a href="{{ route('articles.index') }}" class="inline-flex items-center justify-center rounded-md bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 sm:px-7 py-3 shadow-lg shadow-black/20 transition" aria-label="Jelajahi berita">
+                        Jelajahi Berita
+                    </a>
+                    <a href="{{ route('complaints.create') }}" class="inline-flex items-center justify-center rounded-md bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur px-6 sm:px-7 py-3 font-semibold transition" aria-label="Hubungi kami">
+                        Hubungi Kami
+                    </a>
+                </div>
             </div>
         </div>
     </div>
