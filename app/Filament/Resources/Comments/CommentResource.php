@@ -17,26 +17,29 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class CommentResource extends Resource
 {
     protected static ?string $model = Comment::class;
-
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    
+    protected static ?string $navigationLabel = 'Komentar';
+    protected static UnitEnum|string|null $navigationGroup = 'Interaksi';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                Select::make('article_id')->relationship('article', 'title')->searchable()->required(),
-                Select::make('parent_id')->label('Parent')->relationship('parent', 'id')->searchable(),
-                TextInput::make('sender_name')->required(),
-                TextInput::make('sender_email')->email()->required(),
-                Textarea::make('content')->required()->columnSpanFull(),
-                Select::make('status')->options([
-                    'pending' => 'Pending',
-                    'approved' => 'Approved',
-                    'rejected' => 'Rejected',
+                Select::make('article_id')->label('Artikel')->relationship('article', 'title')->searchable()->required(),
+                Select::make('parent_id')->label('Induk')->relationship('parent', 'id')->searchable(),
+                TextInput::make('sender_name')->label('Nama')->required(),
+                TextInput::make('sender_email')->label('Email')->email()->required(),
+                Textarea::make('content')->label('Isi Komentar')->required()->columnSpanFull(),
+                Select::make('status')->label('Status')->options([
+                    'pending' => 'Tertunda',
+                    'approved' => 'Disetujui',
+                    'rejected' => 'Ditolak',
                 ])->default('pending'),
             ]);
     }
@@ -45,21 +48,21 @@ class CommentResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('article.title')->label('Article')->searchable()->sortable(),
-                TextColumn::make('sender_name')->searchable(),
-                TextColumn::make('sender_email')->searchable(),
+                TextColumn::make('article.title')->label('Artikel')->searchable()->sortable(),
+                TextColumn::make('sender_name')->label('Nama')->searchable(),
+                TextColumn::make('sender_email')->label('Email')->searchable(),
                 BadgeColumn::make('status')->colors([
                     'warning' => 'pending',
                     'success' => 'approved',
                     'danger' => 'rejected',
-                ]),
-                TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                ])->label('Status'),
+                TextColumn::make('created_at')->label('Dibuat')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('status')->options([
-                    'pending' => 'Pending',
-                    'approved' => 'Approved',
-                    'rejected' => 'Rejected',
+                SelectFilter::make('status')->label('Status')->options([
+                    'pending' => 'Tertunda',
+                    'approved' => 'Disetujui',
+                    'rejected' => 'Ditolak',
                 ]),
             ]);
     }

@@ -13,19 +13,22 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
-
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    
+    protected static ?string $navigationLabel = 'Kategori';
+    protected static UnitEnum|string|null $navigationGroup = 'Konten';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-tag';
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                TextInput::make('name')->required(),
-                TextInput::make('slug')->helperText('Otomatis dari nama; bisa disesuaikan'),
+                TextInput::make('name')->label('Nama')->required(),
+                TextInput::make('slug')->label('Slug')->helperText('Otomatis dari nama; bisa disesuaikan'),
             ]);
     }
 
@@ -33,10 +36,10 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->searchable(),
-                TextColumn::make('slug')->searchable(),
-                TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('name')->label('Nama')->searchable(),
+                TextColumn::make('slug')->label('Slug')->searchable(),
+                TextColumn::make('created_at')->label('Dibuat')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')->label('Diperbarui')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ]);
     }
 

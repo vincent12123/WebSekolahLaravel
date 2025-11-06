@@ -17,12 +17,15 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class StaffResource extends Resource
 {
     protected static ?string $model = StaffModel::class;
-
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    
+    protected static ?string $navigationLabel = 'Staf';
+    protected static UnitEnum|string|null $navigationGroup = 'SDM';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
 
     public static function form(Schema $schema): Schema
     {
@@ -41,15 +44,15 @@ class StaffResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('photo_url')->label('Photo'),
-                TextColumn::make('name')->searchable(),
-                TextColumn::make('position')->searchable(),
+                ImageColumn::make('photo_url')->label('Foto'),
+                TextColumn::make('name')->label('Nama')->searchable(),
+                TextColumn::make('position')->label('Jabatan')->searchable(),
                 TextColumn::make('email')->searchable(),
-                TextColumn::make('display_order')->sortable(),
-                TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('display_order')->label('Urutan')->sortable(),
+                TextColumn::make('created_at')->label('Dibuat')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('position')->label('Position'),
+                SelectFilter::make('position')->label('Jabatan'),
             ]);
     }
 

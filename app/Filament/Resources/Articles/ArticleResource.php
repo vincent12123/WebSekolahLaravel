@@ -20,12 +20,16 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ArticleResource extends Resource
 {
     protected static ?string $model = Article::class;
-
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    
+    // Navigasi Filament (Bahasa Indonesia + ikon yang lebih relevan)
+    protected static ?string $navigationLabel = 'Artikel';
+    protected static UnitEnum|string|null $navigationGroup = 'Konten';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     public static function form(Schema $schema): Schema
     {
@@ -33,17 +37,17 @@ class ArticleResource extends Resource
             ->components([
                 Select::make('user_id')->relationship('author', 'name')->searchable()->preload(),
                 Select::make('category_id')->relationship('category', 'name')->searchable()->preload(),
-                TextInput::make('title')->required(),
+                TextInput::make('title')->label('Judul')->required(),
                 TextInput::make('slug')->helperText('Otomatis dari judul; bisa disesuaikan'),
-                TextInput::make('excerpt')->maxLength(500),
-                FileUpload::make('image_url')->image()->disk('public')->directory('articles')->preserveFilenames(),
-                RichEditor::make('content')->required()->columnSpanFull(),
-                Select::make('status')->options([
-                    'published' => 'Published',
-                    'draft' => 'Draft',
-                    'archived' => 'Archived',
+                TextInput::make('excerpt')->label('Ringkasan')->maxLength(500),
+                FileUpload::make('image_url')->label('Gambar')->image()->disk('public')->directory('articles')->preserveFilenames(),
+                RichEditor::make('content')->label('Konten')->required()->columnSpanFull(),
+                Select::make('status')->label('Status')->options([
+                    'published' => 'Dipublikasikan',
+                    'draft' => 'Draf',
+                    'archived' => 'Diarsipkan',
                 ])->default('draft')->required(),
-                DateTimePicker::make('published_at'),
+                DateTimePicker::make('published_at')->label('Terbit Pada'),
             ]);
     }
 
@@ -51,25 +55,25 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('image_url')->label('Image'),
-                TextColumn::make('title')->searchable(),
-                TextColumn::make('category.name')->label('Category')->searchable()->sortable(),
+                ImageColumn::make('image_url')->label('Gambar'),
+                TextColumn::make('title')->label('Judul')->searchable(),
+                TextColumn::make('category.name')->label('Kategori')->searchable()->sortable(),
                 BadgeColumn::make('status')->colors([
                     'success' => 'published',
                     'warning' => 'draft',
                     'danger' => 'archived',
-                ]),
-                TextColumn::make('published_at')->dateTime()->sortable(),
-                TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                ])->label('Status'),
+                TextColumn::make('published_at')->label('Terbit')->dateTime()->sortable(),
+                TextColumn::make('created_at')->label('Dibuat')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')->label('Diperbarui')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('status')->options([
-                    'published' => 'Published',
-                    'draft' => 'Draft',
-                    'archived' => 'Archived',
+                SelectFilter::make('status')->label('Status')->options([
+                    'published' => 'Dipublikasikan',
+                    'draft' => 'Draf',
+                    'archived' => 'Diarsipkan',
                 ]),
-                SelectFilter::make('category_id')->label('Category')->relationship('category', 'name'),
+                SelectFilter::make('category_id')->label('Kategori')->relationship('category', 'name'),
             ]);
     }
 

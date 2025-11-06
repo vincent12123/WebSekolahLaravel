@@ -13,12 +13,15 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class DownloadfileResource extends Resource
 {
     protected static ?string $model = DownloadFile::class;
-
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    
+    protected static ?string $navigationLabel = 'Berkas Unduhan';
+    protected static UnitEnum|string|null $navigationGroup = 'Dokumen';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-down-tray';
 
     public static function form(Schema $schema): Schema
     {

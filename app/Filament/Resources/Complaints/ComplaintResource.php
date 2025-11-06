@@ -17,26 +17,29 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ComplaintResource extends Resource
 {
     protected static ?string $model = Complaint::class;
-
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    
+    protected static ?string $navigationLabel = 'Pengaduan';
+    protected static UnitEnum|string|null $navigationGroup = 'Layanan';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-exclamation-triangle';
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                TextInput::make('name'),
-                TextInput::make('email')->email(),
-                TextInput::make('category')->required(),
-                TextInput::make('subject')->required(),
-                Textarea::make('message')->required()->columnSpanFull(),
-                Select::make('status')->options([
-                    'new' => 'New',
-                    'in_progress' => 'In Progress',
-                    'resolved' => 'Resolved',
+                TextInput::make('name')->label('Nama'),
+                TextInput::make('email')->label('Email')->email(),
+                TextInput::make('category')->label('Kategori')->required(),
+                TextInput::make('subject')->label('Subjek')->required(),
+                Textarea::make('message')->label('Pesan')->required()->columnSpanFull(),
+                Select::make('status')->label('Status')->options([
+                    'new' => 'Baru',
+                    'in_progress' => 'Diproses',
+                    'resolved' => 'Selesai',
                 ])->default('new'),
             ]);
     }
@@ -52,14 +55,14 @@ class ComplaintResource extends Resource
                     'warning' => 'new',
                     'info' => 'in_progress',
                     'success' => 'resolved',
-                ]),
-                TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                ])->label('Status'),
+                TextColumn::make('created_at')->label('Dibuat')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('status')->options([
-                    'new' => 'New',
-                    'in_progress' => 'In Progress',
-                    'resolved' => 'Resolved',
+                SelectFilter::make('status')->label('Status')->options([
+                    'new' => 'Baru',
+                    'in_progress' => 'Diproses',
+                    'resolved' => 'Selesai',
                 ]),
             ]);
     }
