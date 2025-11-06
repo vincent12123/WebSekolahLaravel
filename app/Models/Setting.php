@@ -13,6 +13,7 @@ class Setting extends Model
         'alamat',
         'telepon',
         'email_kontak',
+        'jam_operasional',
         'link_facebook',
         'link_instagram',
         'link_youtube',

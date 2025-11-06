@@ -19,6 +19,11 @@ class SettingForm
                     ->url(),
                 Textarea::make('alamat')
                     ->columnSpanFull(),
+                Textarea::make('jam_operasional')
+                    ->label('Jam Operasional')
+                    ->placeholder('Senin - Jumat, 08.00 - 16.00')
+                    ->rows(2)
+                    ->columnSpanFull(),
                 TextInput::make('telepon')
                     ->tel(),
                 TextInput::make('email_kontak')

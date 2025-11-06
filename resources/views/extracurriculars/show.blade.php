@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('title', $extracurricular->name . ' - Extracurricular Activities')
+@section('title', $extracurricular->name . ' - Ekstrakurikuler')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="mb-8">
-        <a href="{{ route('extracurriculars.index') }}" class="text-indigo-600 hover:text-indigo-700 font-medium inline-flex items-center gap-2 mb-4">
+    <a href="{{ route('extracurriculars.index') }}" class="text-indigo-600 hover:text-indigo-700 font-medium inline-flex items-center gap-2 mb-4">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            Back to All Activities
+            Kembali ke Ekstrakurikuler
         </a>
     </div>
 
@@ -36,7 +36,7 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm text-gray-500 mb-1">Coach</p>
+                            <p class="text-sm text-gray-500 mb-1">Pelatih</p>
                             <p class="font-semibold text-gray-900">{{ $extracurricular->coach }}</p>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm text-gray-500 mb-1">Schedule</p>
+                            <p class="text-sm text-gray-500 mb-1">Jadwal</p>
                             <p class="font-semibold text-gray-900">{{ $extracurricular->schedule }}</p>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm text-gray-500 mb-1">Location</p>
+                            <p class="text-sm text-gray-500 mb-1">Lokasi</p>
                             <p class="font-semibold text-gray-900">{{ $extracurricular->location }}</p>
                         </div>
                     </div>
@@ -73,13 +73,13 @@
             </div>
 
             <div class="prose max-w-none mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">About This Activity</h2>
-                <p class="text-gray-700 leading-relaxed">{{ $extracurricular->description }}</p>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Tentang Kegiatan Ini</h2>
+                <div class="text-gray-700 leading-relaxed">{!! $extracurricular->description !!}</div>
             </div>
 
             @if($extracurricular->contact_person)
                 <div class="bg-gray-50 rounded-lg p-6 mb-8">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Contact Person</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Kontak</h3>
                     <p class="text-gray-700">{{ $extracurricular->contact_person }}</p>
                 </div>
             @endif
@@ -89,7 +89,7 @@
     <!-- Gallery Photos -->
     @if($extracurricular->galleryAlbum && $extracurricular->galleryAlbum->photos->count())
         <div class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">Photo Gallery</h2>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Galeri Foto</h2>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 @foreach($extracurricular->galleryAlbum->photos as $photo)
                     <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden group cursor-pointer">
@@ -99,7 +99,7 @@
             </div>
             <div class="mt-6 text-center">
                 <a href="{{ route('gallery.show', $extracurricular->galleryAlbum) }}" class="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition font-medium">
-                    View Full Gallery
+                    Lihat Galeri Lengkap
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>

@@ -22,6 +22,10 @@ class SettingsTable
                     ->searchable(),
                 TextColumn::make('email_kontak')
                     ->searchable(),
+                TextColumn::make('jam_operasional')
+                    ->label('Jam Operasional')
+                    ->limit(40)
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('link_facebook')
                     ->searchable(),
                 TextColumn::make('link_instagram')

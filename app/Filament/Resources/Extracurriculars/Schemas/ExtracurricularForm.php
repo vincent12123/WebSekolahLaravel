@@ -6,6 +6,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\RichEditor;
 use Filament\Schemas\Schema;
 
 class ExtracurricularForm
@@ -25,7 +26,7 @@ class ExtracurricularForm
                     ->preserveFilenames(),
                 TextInput::make('instructor_name'),
                 TextInput::make('schedule'),
-                Textarea::make('description')
+                RichEditor::make('description')
                     ->columnSpanFull(),
                 Select::make('gallery_album_id')
                     ->relationship('galleryAlbum', 'title')

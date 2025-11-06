@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('title', $job->title . ' - Job Opening')
+@section('title', $job->title . ' - Lowongan Pekerjaan')
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="mb-8">
-        <a href="{{ route('jobs.index') }}" class="text-indigo-600 hover:text-indigo-700 font-medium inline-flex items-center gap-2 mb-4">
+    <a href="{{ route('jobs.index') }}" class="text-indigo-600 hover:text-indigo-700 font-medium inline-flex items-center gap-2 mb-4">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            Back to Job Openings
+            Kembali ke Lowongan
         </a>
     </div>
 
@@ -31,7 +31,8 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                             </svg>
-                            {{ ucfirst($job->type) }}
+                            @php($typeMap = ['full_time' => 'Penuh Waktu', 'part_time' => 'Paruh Waktu', 'contract' => 'Kontrak', 'internship' => 'Magang', 'temporary' => 'Sementara'])
+                            {{ $typeMap[$job->type] ?? Str::headline($job->type) }}
                         </span>
                         @if($job->location)
                             <span class="inline-flex items-center gap-1">
@@ -46,11 +47,12 @@
                 </div>
                 <div class="flex flex-col items-end gap-2">
                     <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold {{ $job->status === 'open' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
-                        {{ ucfirst($job->status) }}
+                        @php($statusMap = ['open' => 'Dibuka', 'closed' => 'Ditutup'])
+                        {{ $statusMap[$job->status] ?? Str::headline($job->status) }}
                     </span>
                     @if($job->deadline)
                         <span class="text-sm text-gray-500">
-                            Apply by: {{ $job->deadline->format('M d, Y') }}
+                            Batas Lamaran: {{ $job->deadline->translatedFormat('d F Y') }}
                         </span>
                     @endif
                 </div>
@@ -62,28 +64,28 @@
                         <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        <span class="font-semibold text-indigo-900">Salary Range:</span>
+                        <span class="font-semibold text-indigo-900">Kisaran Gaji:</span>
                         <span class="text-indigo-700">{{ $job->salary_range }}</span>
                     </div>
                 </div>
             @endif
 
             <div class="prose max-w-none mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">Job Description</h2>
-                <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ $job->description }}</p>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Deskripsi Pekerjaan</h2>
+                <div class="text-gray-700 leading-relaxed">{!! $job->description !!}</div>
             </div>
 
             @if($job->requirements)
                 <div class="prose max-w-none mb-8">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Requirements</h2>
-                    <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ $job->requirements }}</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Persyaratan</h2>
+                    <div class="text-gray-700 leading-relaxed">{!! $job->requirements !!}</div>
                 </div>
             @endif
 
             @if($job->responsibilities)
                 <div class="prose max-w-none mb-8">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Responsibilities</h2>
-                    <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ $job->responsibilities }}</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Tanggung Jawab</h2>
+                    <div class="text-gray-700 leading-relaxed">{!! $job->responsibilities !!}</div>
                 </div>
             @endif
         </div>
@@ -92,7 +94,7 @@
     <!-- Application Form -->
     @if($job->status === 'open' && (!$job->deadline || $job->deadline >= now()))
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">Apply for this Position</h2>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Lamar Posisi Ini</h2>
 
             @if(session('success'))
                 <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6">
@@ -109,7 +111,7 @@
                 @csrf
 
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap *</label>
                     <input type="text" id="name" name="name" value="{{ old('name') }}" required class="w-full px-4 py-2 border @error('name') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                     @error('name')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -117,7 +119,7 @@
                 </div>
 
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Alamat Email *</label>
                     <input type="email" id="email" name="email" value="{{ old('email') }}" required class="w-full px-4 py-2 border @error('email') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                     @error('email')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -125,7 +127,7 @@
                 </div>
 
                 <div>
-                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon *</label>
                     <input type="tel" id="phone" name="phone" value="{{ old('phone') }}" required class="w-full px-4 py-2 border @error('phone') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                     @error('phone')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -133,16 +135,16 @@
                 </div>
 
                 <div>
-                    <label for="cv" class="block text-sm font-medium text-gray-700 mb-2">Upload CV/Resume (PDF only, max 2MB) *</label>
+                    <label for="cv" class="block text-sm font-medium text-gray-700 mb-2">Unggah CV/Resume (hanya PDF, maks 2MB) *</label>
                     <input type="file" id="cv" name="cv" accept=".pdf" required class="w-full px-4 py-2 border @error('cv') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                     @error('cv')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                     @enderror
-                    <p class="text-sm text-gray-500 mt-1">Please upload your CV in PDF format (maximum 2MB)</p>
+                    <p class="text-sm text-gray-500 mt-1">Unggah CV dalam format PDF (maksimum 2MB)</p>
                 </div>
 
                 <div>
-                    <label for="cover_letter" class="block text-sm font-medium text-gray-700 mb-2">Cover Letter</label>
+                    <label for="cover_letter" class="block text-sm font-medium text-gray-700 mb-2">Surat Lamaran</label>
                     <textarea id="cover_letter" name="cover_letter" rows="6" class="w-full px-4 py-2 border @error('cover_letter') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">{{ old('cover_letter') }}</textarea>
                     @error('cover_letter')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -151,9 +153,9 @@
 
                 <div class="flex items-center gap-4">
                     <button type="submit" class="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition font-medium">
-                        Submit Application
+                        Kirim Lamaran
                     </button>
-                    <p class="text-sm text-gray-500">* Required fields</p>
+                    <p class="text-sm text-gray-500">* Wajib diisi</p>
                 </div>
             </form>
         </div>
@@ -162,8 +164,8 @@
             <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
             </svg>
-            <p class="text-gray-600 text-lg font-medium">Applications are currently closed</p>
-            <p class="text-gray-500 text-sm mt-2">This position is no longer accepting applications.</p>
+            <p class="text-gray-600 text-lg font-medium">Pendaftaran saat ini ditutup</p>
+            <p class="text-gray-500 text-sm mt-2">Posisi ini tidak lagi menerima lamaran.</p>
         </div>
     @endif
 </div>

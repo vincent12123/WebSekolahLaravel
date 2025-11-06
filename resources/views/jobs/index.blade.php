@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Job Openings - ' . config('app.name'))
+@section('title', 'Lowongan Pekerjaan - ' . config('app.name'))
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="mb-8">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">Job Openings</h1>
-        <p class="text-gray-600">Join our team and make a difference in education</p>
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">Lowongan Pekerjaan</h1>
+        <p class="text-gray-600">Bergabunglah dengan tim kami dan berkontribusi pada pendidikan</p>
     </div>
 
     @if($jobs->count())
@@ -30,7 +30,8 @@
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                         </svg>
-                                        {{ ucfirst($job->type) }}
+                                        @php($typeMap = ['full_time' => 'Penuh Waktu', 'part_time' => 'Paruh Waktu', 'contract' => 'Kontrak', 'internship' => 'Magang', 'temporary' => 'Sementara'])
+                                        {{ $typeMap[$job->type] ?? Str::headline($job->type) }}
                                     </span>
                                     @if($job->location)
                                         <span class="inline-flex items-center gap-1">
@@ -45,22 +46,23 @@
                             </div>
                             <div class="flex flex-col items-end gap-2">
                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $job->status === 'open' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
-                                    {{ ucfirst($job->status) }}
+                                    @php($statusMap = ['open' => 'Dibuka', 'closed' => 'Ditutup'])
+                                    {{ $statusMap[$job->status] ?? Str::headline($job->status) }}
                                 </span>
                                 @if($job->deadline)
                                     <span class="text-sm text-gray-500">
-                                        Deadline: {{ $job->deadline->format('M d, Y') }}
+                                        Batas Lamaran: {{ $job->deadline->translatedFormat('d F Y') }}
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <p class="text-gray-700 mb-4 line-clamp-3">{{ $job->description }}</p>
+                        <p class="text-gray-700 mb-4 line-clamp-3">{{ Str::limit(strip_tags($job->description), 160) }}</p>
 
                         @if($job->requirements)
                             <div class="mb-4">
-                                <h4 class="font-semibold text-gray-900 text-sm mb-2">Key Requirements:</h4>
-                                <p class="text-sm text-gray-600 line-clamp-2">{{ $job->requirements }}</p>
+                                <h4 class="font-semibold text-gray-900 text-sm mb-2">Persyaratan Utama:</h4>
+                                <p class="text-sm text-gray-600 line-clamp-2">{{ Str::limit(strip_tags($job->requirements), 160) }}</p>
                             </div>
                         @endif
 
@@ -70,19 +72,19 @@
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
-                                    <span class="font-medium">{{ $job->salary_range }}</span>
+                                    <span class="font-medium">Kisaran Gaji: {{ $job->salary_range }}</span>
                                 </span>
                             </div>
                         @endif
 
                         <div class="flex items-center gap-3 pt-4 border-t border-gray-200">
                             <a href="{{ route('jobs.show', $job) }}" class="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition font-medium">
-                                View Details & Apply
+                                Lihat Detail & Lamar
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </a>
-                            <span class="text-xs text-gray-500">Posted {{ $job->created_at->diffForHumans() }}</span>
+                            <span class="text-xs text-gray-500">Diposting {{ $job->created_at->diffForHumans() }}</span>
                         </div>
                     </div>
                 </div>
@@ -98,8 +100,8 @@
             <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
             </svg>
-            <p class="text-gray-600 text-lg">No job openings available at the moment.</p>
-            <p class="text-gray-500 text-sm mt-2">Please check back later for new opportunities.</p>
+            <p class="text-gray-600 text-lg">Belum ada lowongan pekerjaan saat ini.</p>
+            <p class="text-gray-500 text-sm mt-2">Silakan cek kembali di lain waktu untuk kesempatan baru.</p>
         </div>
     @endif
 </div>
