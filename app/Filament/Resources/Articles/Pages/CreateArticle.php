@@ -113,9 +113,18 @@ class CreateArticle extends CreateRecord
                 ->action(function (array $data) {
                     $url = $data['unsplash_image'] ?? null;
                     if ($url) {
-                        $state = $this->form->getState();
-                        $state['image_url_external'] = $url;
-                        $this->form->fill($state);
+                        try {
+                            $svc = app(UnsplashService::class);
+                            // Simpan ke storage agar URL relatif disimpan di DB
+                            $stored = $svc->downloadToPublic($url, 'articles');
+                            $state = $this->form->getState();
+                            $state['image_url'] = $stored; // simpan path storage
+                            $state['image_url_external'] = $url; // catatan sumber
+                            $this->form->fill($state);
+                        } catch (\Throwable $e) {
+                            Notification::make()->title('Gagal menyimpan gambar dari Unsplash')->body($e->getMessage())->danger()->send();
+                            return;
+                        }
                         Notification::make()
                             ->title('Gambar dari Unsplash dipilih')
                             ->success()

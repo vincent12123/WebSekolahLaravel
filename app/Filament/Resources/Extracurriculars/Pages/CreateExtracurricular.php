@@ -80,9 +80,17 @@ class CreateExtracurricular extends CreateRecord
                 ->action(function (array $data) {
                     $url = $data['unsplash_image'] ?? null;
                     if ($url) {
-                        $state = $this->form->getState();
-                        $state['logo_url_external'] = $url;
-                        $this->form->fill($state);
+                        try {
+                            $svc = app(UnsplashService::class);
+                            $stored = $svc->downloadToPublic($url, 'extracurriculars');
+                            $state = $this->form->getState();
+                            $state['logo_url'] = $stored; // simpan path storage
+                            $state['logo_url_external'] = $url; // catatan sumber
+                            $this->form->fill($state);
+                        } catch (\Throwable $e) {
+                            Notification::make()->title('Gagal menyimpan gambar dari Unsplash')->body($e->getMessage())->danger()->send();
+                            return;
+                        }
                         Notification::make()
                             ->title('Logo dari Unsplash dipilih')
                             ->success()

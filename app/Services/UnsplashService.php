@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class UnsplashService
 {
@@ -53,6 +54,32 @@ class UnsplashService
 	{
 		$list = $this->search($query, 1);
 		return $list[0] ?? null;
+	}
+
+	/**
+	 * Download a remote image URL to the public disk and return the stored relative path.
+	 */
+	public function downloadToPublic(string $url, string $directory = 'articles', ?string $filename = null): string
+	{
+		$response = Http::timeout(60)->get($url);
+		if ($response->failed()) {
+			throw new \RuntimeException('Failed to download image from Unsplash URL.');
+		}
+
+		$mime = $response->header('Content-Type') ?? 'image/jpeg';
+		$ext = match (true) {
+			str_contains($mime, 'png') => 'png',
+			str_contains($mime, 'webp') => 'webp',
+			str_contains($mime, 'gif') => 'gif',
+			default => 'jpg',
+		};
+
+		$name = $filename ?: (uniqid('unsplash_') . '.' . $ext);
+		$path = trim($directory, '/').'/'.$name;
+
+		Storage::disk('public')->put($path, $response->body());
+
+		return $path;
 	}
 }
 
