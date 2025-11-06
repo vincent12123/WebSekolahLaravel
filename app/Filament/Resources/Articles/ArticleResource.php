@@ -6,6 +6,7 @@ use App\Filament\Resources\Articles\Pages\CreateArticle;
 use App\Filament\Resources\Articles\Pages\EditArticle;
 use App\Filament\Resources\Articles\Pages\ListArticles;
 use App\Models\Article;
+use App\Models\Category;
 use BackedEnum;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -21,6 +22,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use UnitEnum;
+use Illuminate\Support\Str;
 
 class ArticleResource extends Resource
 {
@@ -36,7 +38,24 @@ class ArticleResource extends Resource
         return $schema
             ->components([
                 Select::make('user_id')->relationship('author', 'name')->searchable()->preload(),
-                Select::make('category_id')->relationship('category', 'name')->searchable()->preload(),
+                Select::make('category_id')
+                    ->label('Kategori')
+                    ->relationship('category', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->createOptionForm([
+                        TextInput::make('name')->label('Nama')->required(),
+                        TextInput::make('slug')->label('Slug')->helperText('Biarkan kosong untuk otomatis'),
+                    ])
+                    ->createOptionUsing(function (array $data): int {
+                        $name = $data['name'];
+                        $slug = $data['slug'] ?: Str::slug($name);
+                        $category = Category::query()->create([
+                            'name' => $name,
+                            'slug' => $slug,
+                        ]);
+                        return (int) $category->getKey();
+                    }),
                 TextInput::make('title')->label('Judul')->required(),
                 TextInput::make('slug')->helperText('Otomatis dari judul; bisa disesuaikan'),
                 TextInput::make('excerpt')->label('Ringkasan')->maxLength(500),

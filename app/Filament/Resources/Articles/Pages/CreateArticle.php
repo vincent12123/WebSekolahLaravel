@@ -34,10 +34,10 @@ class CreateArticle extends CreateRecord
                         $service = app(AiArticleService::class);
                         $result = $service->improveDraft($data['draft']);
 
-                        $this->form->fill([
-                            'content' => $result['content'] ?? null,
-                            'excerpt' => $result['excerpt'] ?? null,
-                        ]);
+                        $state = $this->form->getState();
+                        $state['content'] = $result['content'] ?? $state['content'] ?? null;
+                        $state['excerpt'] = $result['excerpt'] ?? $state['excerpt'] ?? null;
+                        $this->form->fill($state);
 
                         Notification::make()
                             ->title('Konten artikel berhasil dibuat oleh AI')
@@ -113,9 +113,9 @@ class CreateArticle extends CreateRecord
                 ->action(function (array $data) {
                     $url = $data['unsplash_image'] ?? null;
                     if ($url) {
-                        $this->form->fill([
-                            'image_url_external' => $url,
-                        ]);
+                        $state = $this->form->getState();
+                        $state['image_url_external'] = $url;
+                        $this->form->fill($state);
                         Notification::make()
                             ->title('Gambar dari Unsplash dipilih')
                             ->success()

@@ -20,10 +20,15 @@ class ExtracurricularForm
                 TextInput::make('slug')
                     ->required(),
                 FileUpload::make('logo_url')
+                    ->label('Logo (Upload)')
                     ->image()
                     ->disk('public')
                     ->directory('extracurriculars')
                     ->preserveFilenames(),
+                TextInput::make('logo_url_external')
+                    ->label('URL Logo (Unsplash/External)')
+                    ->url()
+                    ->helperText('Atau pilih gambar dari Unsplash lewat tombol di atas.'),
                 TextInput::make('instructor_name'),
                 TextInput::make('schedule'),
                 RichEditor::make('description')
