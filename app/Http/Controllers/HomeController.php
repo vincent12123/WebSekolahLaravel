@@ -31,6 +31,18 @@ class HomeController extends Controller
             ->take(4)
             ->get();
 
-        return view('home', compact('latestAnnouncements', 'latestArticles', 'featuredAlbums'));
+            $upcomingEvents = \App\Models\Event::query()
+                ->where(function($q){
+                    $q->whereNull('published_at')->orWhere('published_at', '<=', now());
+                })
+                ->where('starts_at', '>=', now()->startOfDay())
+                ->orderBy('starts_at')
+                ->take(6)
+                ->get();
+
+    // Optional configurable hero image via config('app.hero_image_url') or env('HERO_IMAGE_URL')
+    $heroImageUrl = config('app.hero_image_url', env('HERO_IMAGE_URL'));
+
+            return view('home', compact('latestAnnouncements', 'latestArticles', 'featuredAlbums', 'upcomingEvents', 'heroImageUrl'));
     }
 }

@@ -12,6 +12,7 @@ use App\Models\Category;
 use App\Models\Article;
 use App\Observers\SlugObserver;
 use App\Observers\DownloadFileObserver;
+use App\Models\Event;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
     Extracurricular::observe(SlugObserver::class);
     Category::observe(SlugObserver::class);
     Article::observe(SlugObserver::class);
+    Event::observe(SlugObserver::class);
 
     // Auto file metadata for downloads
     DownloadFile::observe(DownloadFileObserver::class);

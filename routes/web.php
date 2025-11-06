@@ -10,6 +10,7 @@ use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\EventController;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -43,6 +44,10 @@ Route::post('/jobs/{job}/apply', [JobController::class, 'apply'])->name('jobs.ap
 
 // Staff
 Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
+
+// Events
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
 // Complaint Form
 Route::get('/complaints/create', [ComplaintController::class, 'create'])->name('complaints.create');

@@ -4,15 +4,20 @@
 
 @section('content')
 <!-- Hero Section -->
-<div class="relative bg-gray-100">
-    <div class="relative">
-        <div class="absolute inset-0">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600 opacity-75"></div>
-        </div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+<div class="relative">
+    <div class="relative h-[420px] sm:h-[520px]">
+        @if(!empty($heroImageUrl))
+            <img src="{{ $heroImageUrl }}" alt="Hero" class="absolute inset-0 w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-black/40"></div>
+        @else
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600"></div>
+            <div class="absolute inset-0 bg-black/30"></div>
+        @endif
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col items-center justify-center text-center">
             <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">Selamat datang di {{ config('app.name') }}</h1>
-            <p class="mt-4 max-w-3xl mx-auto text-xl text-indigo-100 sm:text-2xl">Tetap terbarui dengan pengumuman, artikel, dan kegiatan terbaru kami</p>
-            <div class="mt-8 flex justify-center gap-4">
+            <p class="mt-4 max-w-3xl mx-auto text-lg sm:text-xl text-white/90">Tetap terbarui dengan pengumuman, artikel, dan kegiatan terbaru kami</p>
+            <div class="mt-8 flex flex-wrap justify-center gap-4">
                 <a href="{{ route('announcements.index') }}" class="inline-block rounded-lg bg-white px-8 py-3 text-base font-semibold text-indigo-600 shadow-md hover:bg-indigo-50 transition" aria-label="Lihat pengumuman">
                     Lihat Pengumuman
                 </a>
@@ -110,6 +115,30 @@
             </div>
         @endif
     </section>
+
+    @if(isset($upcomingEvents) && $upcomingEvents->count())
+    <!-- Upcoming Events -->
+    <section class="py-12 border-t border-gray-200">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-900">Event Mendatang</h2>
+            <a href="{{ route('events.index') }}" class="text-indigo-600 hover:text-indigo-700 font-semibold" aria-label="Lihat semua event">Lihat Semua →</a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach($upcomingEvents as $event)
+                <a href="{{ route('events.show', $event) }}" class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition block">
+                    @if($event->featured_image)
+                        <img src="{{ $event->featured_image }}" class="w-full h-44 object-cover" alt="{{ $event->title }}">
+                    @endif
+                    <div class="p-5">
+                        <div class="text-sm text-gray-500 mb-1">{{ $event->starts_at?->translatedFormat('d F Y, H:i') }} @if($event->location) • {{ $event->location }} @endif</div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ $event->title }}</h3>
+                        <p class="text-gray-600 text-sm line-clamp-2">{{ Str::limit(strip_tags($event->description), 140) }}</p>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+    </section>
+    @endif
 
     <!-- Featured Gallery Albums -->
     <section class="py-12 border-t border-gray-200">

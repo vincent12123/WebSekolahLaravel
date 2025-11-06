@@ -41,6 +41,8 @@
                         <a href="{{ route('downloads.index') }}" class="ml-4 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('downloads.*') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900' }}">Unduhan</a>
                         <!-- Extracurriculars -->
                         <a href="{{ route('extracurriculars.index') }}" class="ml-4 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('extracurriculars.*') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900' }}">Ekstrakurikuler</a>
+                        <!-- Events -->
+                        <a href="{{ route('events.index') }}" class="ml-4 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('events.*') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900' }}">Event</a>
                         <!-- Jobs -->
                         <a href="{{ route('jobs.index') }}" class="ml-4 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('jobs.*') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900' }}">Lowongan</a>
                         <!-- Staff -->
@@ -61,6 +63,7 @@
                 <a href="{{ route('gallery.index') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('gallery.*') ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">Galeri</a>
                 <a href="{{ route('downloads.index') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('downloads.*') ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">Unduhan</a>
                 <a href="{{ route('extracurriculars.index') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('extracurriculars.*') ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">Ekstrakurikuler</a>
+                <a href="{{ route('events.index') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('events.*') ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">Event</a>
                 <a href="{{ route('jobs.index') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('jobs.*') ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">Lowongan</a>
                 <a href="{{ route('staff.index') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('staff.*') ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">Staf</a>
                 <a href="{{ route('complaints.create') }}" class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {{ request()->routeIs('complaints.*') ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800' }}">Pengaduan</a>
