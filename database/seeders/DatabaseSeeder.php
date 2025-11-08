@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             ExtracurricularSeeder::class,
             JobSeeder::class,
             StaffSeeder::class,
+            EventSeeder::class,
         ]);
     }
 }
