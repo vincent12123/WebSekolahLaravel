@@ -24,6 +24,7 @@ class SettingForm
                 FileUpload::make('foto_kepala_sekolah_url')
                     ->label('Foto Kepala Sekolah')
                     ->image()
+                    ->disk('public')
                     ->directory('images')
                     ->imageEditor()
                     ->imageResizeMode('contain')

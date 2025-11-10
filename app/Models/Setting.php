@@ -35,7 +35,23 @@ class Setting extends Model
         if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://') || str_starts_with($path, '/')) {
             return $path;
         }
-        // Assume stored on public disk
-        return \Illuminate\Support\Facades\Storage::disk('public')->url($path);
+        // Prefer public disk; fall back to local disk (served) if needed
+        $storage = \Illuminate\Support\Facades\Storage::disk('public');
+        if ($storage->exists($path)) {
+            return $storage->url($path);
+        }
+
+        // Fallback: if previously saved to the default/local disk
+        $local = \Illuminate\Support\Facades\Storage::disk(config('filesystems.default'));
+        if ($local->exists($path)) {
+            try {
+                return $local->url($path);
+            } catch (\Throwable $e) {
+                // ignore and let it fall through
+            }
+        }
+
+        // Last resort: return as-is, which will likely 404 but avoids exceptions
+        return $path;
     }
 }
