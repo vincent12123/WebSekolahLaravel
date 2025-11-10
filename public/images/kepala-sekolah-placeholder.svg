@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <clipPath id="circle">
+      <circle cx="128" cy="128" r="120"/>
+    </clipPath>
+  </defs>
+  <rect width="256" height="256" rx="128" fill="url(#g)"/>
+  <g clip-path="url(#circle)">
+    <!-- Head -->
+    <circle cx="128" cy="92" r="44" fill="#ffffff" fill-opacity="0.9"/>
+    <!-- Shoulders/body -->
+    <path d="M32 228c12-44 52-72 96-72s84 28 96 72" fill="#ffffff" fill-opacity="0.9"/>
+  </g>
+  <!-- Subtle ring -->
+  <circle cx="128" cy="128" r="123" stroke="#ffffff" stroke-opacity="0.5" stroke-width="6" fill="none"/>
+  <!-- Label -->
+  <text x="128" y="242" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui" font-size="14" fill="#ffffff" fill-opacity="0.85">Foto Kepala Sekolah</text>
+</svg>

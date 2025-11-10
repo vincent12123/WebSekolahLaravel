@@ -39,6 +39,29 @@
 </div>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Kata Sambutan Kepala Sekolah -->
+    <section class="py-12">
+        @php($setting = \App\Models\Setting::first())
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+            <div class="flex items-start gap-6">
+                <div class="shrink-0 hidden sm:block">
+                    @php($fotoPublic = $setting?->foto_kepala_sekolah_public)
+                    <img src="{{ $fotoPublic ?? asset('images/kepala-sekolah-placeholder.svg') }}" alt="Foto Kepala Sekolah" class="w-20 h-20 rounded-full border border-gray-200 shadow-sm object-cover" />
+                </div>
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Kata Sambutan Kepala Sekolah</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        {{ $setting?->sambutan_kepala_sekolah ?? 'Selamat datang di website resmi SMPN 2 Sintang. Melalui platform ini, kami berkomitmen menghadirkan informasi yang akurat, transparan, dan bermanfaat bagi siswa, orang tua, guru, dan seluruh pemangku kepentingan. Semoga website ini dapat menjadi jembatan komunikasi serta sarana literasi digital yang mendorong prestasi dan karakter peserta didik.' }}
+                    </p>
+                    <div class="mt-6">
+                        <p class="font-semibold text-gray-900">{{ $setting?->nama_kepala_sekolah ?? 'Kepala Sekolah' }}</p>
+                        <p class="text-gray-600">Kepala Sekolah • SMPN 2 Sintang</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Latest Announcements -->
     <section class="py-12">
         <div class="flex justify-between items-center mb-8">
